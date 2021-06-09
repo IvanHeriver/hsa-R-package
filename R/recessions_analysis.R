@@ -58,13 +58,6 @@ recession_events_index <- function(Q, minduration, maxduration, minvalue,
   return(ievents)
 }
 
-# a faster version (50 times faster) of the lm() function
-# see ?.lm.fit
-.hsaFastLm <- function(x, y) {
-  x <- cbind(1, x)
-  .lm.fit(x, y)
-}
-
 #------------------------------------------------------------------------------
 #' Computes the early and late recession times
 #' 
@@ -111,7 +104,7 @@ recession_times <- function(Q, i_events, segments = list(1L:5L, 15L:30L), n_min 
     }, s = s)
     valid_Q_e <- lengths(Q_e) >= n_min
     Q_e <- Q_e[valid_Q_e]
-    reg_res <- lapply(Q_e, function(e) .hsaFastLm(1:length(e), e))
+    reg_res <- lapply(Q_e, function(e) .fast_lm(1:length(e), e))
     tau[valid_Q_e, k] <- -1 / unlist(lapply(reg_res, function(e) e$coefficients[2L]), use.names = FALSE)
   }
   if (is.function(summary_fun)) apply(tau, 2, summary_fun, ...) else as.data.frame(tau)
@@ -131,7 +124,7 @@ rec_power_law_model_fit <- function(x) {
   x <- log(x)
   invalid <- apply(is.na(x) | is.infinite(x), 1L, any)
   x <- x[!invalid, , drop = FALSE]
-  y <- .hsaFastLm(x[, 1L], x[, 2L])$coefficients
+  y <- .fast_lm(x[, 1L], x[, 2L])$coefficients
   y[1] <- 1 / exp(y[1L])
   y
 }

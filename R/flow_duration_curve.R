@@ -80,10 +80,8 @@ fdc_slope_percentiles <- function(Q, slope_probs = c(0.33, 0.66), percentile_pro
 #' 
 #' Given a vector of streamflow values 'Q', this function computes a data.frame
 #' with two columns:
-#' \describe{
-#'  \item{p} probabilities of exceedance
-#'  \item{Q} corresponding streamflow values
-#' }
+#' * 'p': probabilities of exceedance
+#' * 'Q': corresponding streamflow values
 # Two methods can be used: simply sorting the data (not recommended)
 # or using the \code{quantile} function.
 #' 
@@ -95,10 +93,8 @@ fdc_slope_percentiles <- function(Q, slope_probs = c(0.33, 0.66), percentile_pro
 #' @param na.rm logical. Should the missing values be ignored? (must be TRUE if
 #' the \code{quantile} function is used and 'Q' contains missing values)
 #' @return a data.frame with two columns:
-#' \describe{
-#'  \item{p} probabilities of exceedance
-#'  \item{Q} corresponding streamflow values
-#' }
+#' * 'p': probabilities of exceedance
+#' * 'Q': corresponding streamflow values
 #' @seealso \code{\link{fdc_slope}}, \code{\link{fdc_percentiles}} and \code{\link{fdc_slope_percentiles}}
 #' @export 
 fdc_values <- function(Q, n = 1000, sort = FALSE, na.rm = TRUE) {
@@ -114,5 +110,3 @@ fdc_values <- function(Q, n = 1000, sort = FALSE, na.rm = TRUE) {
   }
   return(data.frame(p = pfdc, Q = Qfdc))
 }
-
-
