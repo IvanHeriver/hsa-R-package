@@ -9,4 +9,5 @@
 #' @importFrom Rcpp evalCpp
 #' @useDynLib HSA
 #' @name HSA
+#' @export HSA
 NULL

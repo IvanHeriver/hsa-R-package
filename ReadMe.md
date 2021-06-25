@@ -21,6 +21,10 @@ library(devtools)
 install_github("IvanHeriver/hsa-R-package")
 ```
 
+## basic usage
+
+
+
 # References
 
 I. Horner, “Design and evaluation of hydrological signatures for the diagnosis and improvement of a process-based distributed hydrological model.” PhD thesis, Université Grenoble Alpes
