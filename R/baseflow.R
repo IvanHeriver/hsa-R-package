@@ -21,7 +21,7 @@
 #' compute the baseflow time series using the Gustard algorithm.
 #' 
 #' This function compute baseflow time series using the algorithm of Gustard
-#' et al. (XXXX) (a.k.a. method of the Institude of hydrology).
+#' et al. (1992) (a.k.a. method of the Institude of hydrology).
 #' 
 #' @param Q numeric vector. Streamflow vector.
 #' @param d integer. Window size (in days) to look for local minima
@@ -29,6 +29,9 @@
 #' @param k float. Factor to apply to local minima when looking for
 #' pivot points (i.e. local local minima)
 #' @return Returns a baseflow time series.
+#' @references 
+#' A. Gustard, A. Bullock, and J. M. Dixon,
+#' “Low flow estimation in the United Kingdom,” Tech. Rep. 108, Institute of Hydrology, Wallingford, UK, 1992.
 #' @export
 baseflow_Gustard <- function(Q, d = 5, k = 0.9) {
   n <- length(Q)

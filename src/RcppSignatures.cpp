@@ -2,6 +2,21 @@
 // #include <RcppArmadillo.h>
 using namespace Rcpp;
 
+
+//------------------------------------------------------------------------------
+//' compute a baseflow time series using the Lyne & Hollick algorithm.
+//' 
+//' This function compute baseflow time series using the algorithm of Lyne and Hollick
+//' (1979)
+//' 
+//' @param Q numeric vector. Streamflow vector.
+//' @param k float. parameter.
+//' @return Returns a baseflow time series.
+//' @references 
+//' V. Lyne and M. Hollick,
+//' “Stochastic time-variable rainfall-runoff modelling,”
+//' in Hydrology and Water Ressources Symposium, Perth, Australia, 1979, pp. 89–92.
+//' @export
 // [[Rcpp::export]]
 NumericVector baseflow_LyneHollick(NumericVector Q, double k) {
   int n = Q.size();
@@ -24,6 +39,19 @@ NumericVector baseflow_LyneHollick(NumericVector Q, double k) {
   return Q - Qqf;
 }
 
+//------------------------------------------------------------------------------
+//' compute a baseflow time series using the Chapman & Maxwell algorithm.
+//' 
+//' This function compute baseflow time series using the algorithm of Chapman and Maxwell
+//' (1996)
+//' 
+//' @param Q numeric vector. Streamflow vector.
+//' @param k float. parameter.
+//' @return Returns a baseflow time series.
+//' @references 
+//' T. G. Chapman and A. I. Maxwell, 
+//' “Baseflow separation - comparison of numerical methods with tracer experiments,” Hobart, Tasmania, 1996.
+//' @export
 // [[Rcpp::export]]
 NumericVector baseflow_ChapmanMaxwell(NumericVector Q, double k) {
   int n = Q.size();
@@ -46,6 +74,21 @@ NumericVector baseflow_ChapmanMaxwell(NumericVector Q, double k) {
   return Qbf;
 }
 
+//------------------------------------------------------------------------------
+//' compute a baseflow time series using the Boughton algorithm.
+//' 
+//' This function compute baseflow time series using the algorithm of Boughton
+//' described in Chapman (1999)
+//' 
+//' @param Q numeric vector. Streamflow vector.
+//' @param k float. parameter.
+//' @param C float. parameter.
+//' @return Returns a baseflow time series.
+//' @references 
+//' T. Chapman,
+//' “A comparison of algorithms for streamflow recession and basefow separation,”
+//' Hydrological Processes, vol. 13, pp. 701–714, 1999.
+//' @export
 // [[Rcpp::export]]
 NumericVector baseflow_Boughton(NumericVector Q, double k, double C) {
   int n = Q.size();
@@ -68,6 +111,24 @@ NumericVector baseflow_Boughton(NumericVector Q, double k, double C) {
   return Qbf;
 }
 
+
+//------------------------------------------------------------------------------
+//' compute a baseflow time series using the Eckhardt algorithm.
+//' 
+//' This function compute baseflow time series using the algorithm of Eckhardt (2005, 2008)
+//' 
+//' @param Q numeric vector. Streamflow vector.
+//' @param a float. parameter.
+//' @param BFImax float. parameter.
+//' @return Returns a baseflow time series.
+//' @references 
+//'b K. Eckhardt,
+//' “How to construct recursive digital filters for baseflow separation,” 
+//' Hydrological Processes, vol. 19, pp. 507–515, 2005.
+//' K. Eckhardt, 
+//' “A comparison of baseflow indices, which were calculated with seven different baseflow separation methods,”
+//' Journal of Hydrology, vol. 352, pp. 168–173, 2008, doi: 10.1016/j.jhydrol.2008.01.005.
+//' @export
 // [[Rcpp::export]]
 NumericVector baseflow_Eckhardt(NumericVector Q, double a, double BFImax) {
   int n = Q.size();

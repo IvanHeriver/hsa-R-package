@@ -20,5 +20,9 @@ Returns a baseflow time series.
 }
 \description{
 This function compute baseflow time series using the algorithm of Gustard
-et al. (XXXX) (a.k.a. method of the Institude of hydrology).
+et al. (1992) (a.k.a. method of the Institude of hydrology).
+}
+\references{
+A. Gustard, A. Bullock, and J. M. Dixon,
+“Low flow estimation in the United Kingdom,” Tech. Rep. 108, Institute of Hydrology, Wallingford, UK, 1992.
 }
