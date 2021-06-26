@@ -16,12 +16,12 @@
 #' (P-Q)
 #' @export
 pq_cumsum <- function(Q, P, hdays) {
-  data.frame(Q, P, hdays) %>% 
-    group_by(hdays) %>%
-    summarise_all(mean, na.rm = TRUE) %>%
-    mutate_at(vars(Q, P), cumsum_interpolate) %>%
-    mutate(P_Q = P - Q) %>%
-    data.frame()
+  y <- data.frame(Q, P, hdays)
+  y <- dplyr::group_by(y, hdays)
+  y <- dplyr::summarise_all(y, mean, na.rm = TRUE)
+  y <- dplyr::mutate_at(y, vars(Q, P), cumsum_interpolate)
+  y <- dplyr::mutate(y, P_Q = P - Q)
+  data.frame(y)
 }
 
 #------------------------------------------------------------------------------
@@ -55,10 +55,10 @@ pq_curve_slopes <- function(PQ, start = 15, end = 183, bp = mean(c(start, end)),
   x <- start:end
   y <- PQ[x]
   if (intercept) {
-    reg <- segmented(lm(y ~ x), psi = bp)
+    reg <- segmented::segmented(lm(y ~ x), psi = bp)
     coefs <- reg$coefficients
   } else {
-    reg <- segmented(lm(y ~ x + 0), psi = bp)
+    reg <- segmented::segmented(lm(y ~ x + 0), psi = bp)
     coefs <- c(0, reg$coefficients)
   }
   coefs[3L] <- sum(coefs[2:3])
@@ -101,19 +101,19 @@ pq_curve_slopes <- function(PQ, start = 15, end = 183, bp = mean(c(start, end)),
 #' @return Returned
 #' @export
 pq_slopes <- function(Q, P, hdays, start = 15, end = 183, bp = mean(c(start, end)), intercept = TRUE) {
-  PQ <- data.frame(Q, P, hdays) %>% 
-    group_by(hdays) %>%
-    summarise_all(mean, na.rm = TRUE) %>%
-    mutate_at(vars(Q, P), hsaCumsum) %>%
-    mutate(P_Q = P - Q)
+  PQ <- data.frame(Q, P, hdays)
+  PQ <- dplyr::group_by(PQ, hdays) 
+  PQ <- dplyr::summarise_all(PQ, mean, na.rm = TRUE)
+  PQ <- dplyr::mutate_at(PQ, vars(Q, P), hsaCumsum)
+  PQ <- dplyr::mutate(PQ, P_Q = P - Q)
   PQ <- PQ$P_Q
   x <- start:end
   y <- PQ[x]
   if (intercept) {
-    reg <- segmented(lm(y ~ x), psi = bp)
+    reg <- segmented::segmented(lm(y ~ x), psi = bp)
     coefs <- reg$coefficients
   } else {
-    reg <- segmented(lm(y ~ x + 0), psi = bp)
+    reg <- segmented::segmented(lm(y ~ x + 0), psi = bp)
     coefs <- c(0, reg$coefficients)
   }
   coefs[3L] <- sum(coefs[2:3])

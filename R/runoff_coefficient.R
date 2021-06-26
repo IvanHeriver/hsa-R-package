@@ -16,5 +16,5 @@
 #' @export
 runoff_coefficient <- function(Q, P, na.rm = TRUE) {
   if (length(Q) != length(P)) warning("'Q' and 'P' don't have the same length!")
-  hsaSumRatio(Q, P, na.rm = na.rm)
+  sum_ratio(Q, P, na.rm = na.rm)
 }

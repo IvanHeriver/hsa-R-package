@@ -136,10 +136,10 @@ get_what_is_within <- function(OriginalTime, FilteredTime) OriginalTime%in%Filte
 regime_curve <- function(hdays, x, n = 1L, na.rm = TRUE, remove_last = TRUE) {
   if (is.null(dim(x))) x <- matrix(x, dimnames = list(NULL, as.character(substitute(x))))
   if (n > 1L) x <- apply(x, 2L, roll_mean, n = n, fill = NA)
-  y <- data.frame(hdays, x)  %>% 
-    group_by(hdays) %>% 
-    summarise_all(mean, na.rm = na.rm) %>% 
-    data.frame()
+  y <- data.frame(hdays, x)
+  y <- dplyr::group_by(y, hdays)
+  y <- dplyr::summarise_all(y, mean, na.rm = na.rm)
+  y <- dplyr::data.frame(y)
   if (remove_last) return(y[-nrow(y), ]) else return(y)
 }
 
@@ -159,7 +159,7 @@ regime_curve <- function(hdays, x, n = 1L, na.rm = TRUE, remove_last = TRUE) {
 #' @export
 cumulative_curves <- function(x, na.action = "interpolate") {
   if (is.null(dim(x))) x <- matrix(x)
-  y <- apply(x, 2L, hsaCumsum, na.action = na.action)
+  y <- apply(x, 2L, cumsum_interpolate, na.action = na.action)
   as.data.frame(y)
 }
 

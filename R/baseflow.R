@@ -89,8 +89,10 @@ baseflow_index <- function(Q, Qbf, na.rm = TRUE) {
 #' @export
 baseflow_regime_magnitude <- function(Qbf, hdays, n = 1) {
   x <- data.frame(Qbf, hdays)
-  y <- x %>% group_by(hdays) %>% summarise(Qbf_dailymean = mean(Qbf, na.rm = TRUE))
-  y <- roll_mean(y[["Qbf_dailymean"]], n = n, fill = NA, align = "center")
+  # y <- x %>% group_by(hdays) %>% summarise(Qbf_dailymean = mean(Qbf, na.rm = TRUE))
+  y <- dplyr::group_by(x, hdays)
+  y <- dplyr::summarise(y, Qbf_dailymean = mean(Qbf, na.rm = TRUE))
+  y <- RcppRoll::roll_mean(y[["Qbf_dailymean"]], n = n, fill = NA, align = "center")
   max_y <- max(y, na.rm = TRUE)
   min_y <- min(y, na.rm = TRUE)
   c(mag = (max_y - min_y) / max_y, min = min_y, max = max_y)
@@ -116,8 +118,10 @@ baseflow_regime_magnitude <- function(Qbf, hdays, n = 1) {
 #' @export
 baseflow_regime <- function(Qbf, hdays, n = 1) {
   x <- data.frame(Qbf, hdays)
-  y <- x %>% group_by(hdays) %>% summarise(Qbf_dailymean = mean(Qbf, na.rm = TRUE))
-  roll_mean(y[["Qbf_dailymean"]], n = n, fill = NA, align = "center")
+  # y <- x %>% group_by(hdays) %>% summarise(Qbf_dailymean = mean(Qbf, na.rm = TRUE))
+  y <- dplyr::group_by(x, hdays)
+  y <- dplyr::summarise(y, Qbf_dailymean = mean(Qbf, na.rm = TRUE))
+  RcppRoll::roll_mean(y[["Qbf_dailymean"]], n = n, fill = NA, align = "center")
 }
 
 #------------------------------------------------------------------------------
