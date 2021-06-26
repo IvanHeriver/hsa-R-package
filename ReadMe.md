@@ -8,7 +8,7 @@ Details on the implemented signatures can be found in Horner (2020) and Horner e
 
 ## Installation
 
-I strongly recommend you use the devtools package to install the HSA package:
+I recommend you use the devtools package to install the HSA package:
 
 ```splus
 install.package("devtools")
@@ -21,7 +21,13 @@ library(devtools)
 install_github("IvanHeriver/hsa-R-package")
 ```
 
-## basic usage
+## Basic usage
+
+Load the package:
+
+```
+library(HSA)
+```
 
 
 

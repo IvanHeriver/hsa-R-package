@@ -12,10 +12,10 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
 Imports: 
-    dplyr, 
+    dplyr,
     segmented,
     RcppRoll,
-    Rcpp
+    Rcpp,
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
