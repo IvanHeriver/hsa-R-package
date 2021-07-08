@@ -22,12 +22,12 @@ probabilities for the streamflow percentiles to compute}
 }
 \value{
 A numeric vector of length n+1 where n is the length of
-'percentile_probs' with the first element being the slope of the
+\code{percentile_probs} with the first element being the slope of the
 flow duration curve mid-segment.
 }
 \description{
 This function compute both (1) the mid-segment flow duration curve slope
-(see \code{\link{fdc_slope}}) and (2) any streamflow quantile (see
+(see \code{\link{fdc_slope}}) and (2) any streamflow percentiles (see
 \code{\link{fdc_percentiles}}).
 }
 \seealso{

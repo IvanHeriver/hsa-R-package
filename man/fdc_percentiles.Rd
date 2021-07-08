@@ -13,12 +13,12 @@ fdc_percentiles(Q, probs = c(0.1, 0.9))
 streamflow percentiles to compute.}
 }
 \value{
-A numeric vector of the same length as Q containing the streamflow
-percentiles corresponding to the exceedance probabilities specified with
-argument 'probs'
+A numeric vector of the same length as \code{probs} containing the
+streamflow percentiles corresponding to the exceedance probabilities
+specified with argument \code{probs}.
 }
 \description{
-Given streamflow exceedance probability values ('probs') compute the
+Given streamflow exceedance probability values (\code{probs}) compute the
 corresponding streamflow values/percentiles.
 }
 \seealso{

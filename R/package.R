@@ -12,7 +12,12 @@
 #' @export
 NULL
 
-
+# instruction for preparing and installing package:
+# delete NAMESPACE file
+# library(roxygen2)
+# roxygenize()
+# edit NAMESPACE file: remove 'export HSA' line and remove commas after external dependency names
 # library(devtools)
 # C:\Users\ihach\Documents\Programming\R\hsa-R-package
+# remove.packages("HSA")
 # install_local(file.path("C:","Users", "ihach", "Documents", "Programming", "R", "hsa-R-package"))

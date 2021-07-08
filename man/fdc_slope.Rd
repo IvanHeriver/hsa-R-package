@@ -25,7 +25,7 @@ slope of the mid-segment slope of the flow duration curve.
 \details{
 The computation of the slope is done with the following function:
 \code{- (log10(Q_high) - log10(Q_low)) / diff(probs)}
-where \code{log10(Q_low)} (resp. log10(Q_high)) is the log transformed
+where \code{log10(Q_low)} (resp. \code{log10(Q_high)}) is the log transformed
 values of streamflow corresponding to the low (resp. high) end of the
 mid-segment of the flow duration curve
 }

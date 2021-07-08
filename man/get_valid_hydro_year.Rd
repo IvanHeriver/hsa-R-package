@@ -23,14 +23,16 @@ that indicates whether or not the time steps are part of a valid hydrological
 year.
 }
 \description{
-Given a hydrological year vector and a matrix with the same number
+Given a hydrological year vector (a vector indicating the hydrological year
+each time step belongs to) and a matrix with the same number
 of rows (and any number of column), this function returns a logical
-vector of the same length as the hydrological year vector that
-indicates whether or not the time steps are part of a valid
-hydrological year. Validity of a hydrological year is assessed
-according the two following rules:
-\enumerate{
-\item is the year complete (i.e. is there at least \code{n} (365) days)?
-\item is there less than \code{na.th} (proportion) missing values in the year?
+vector of the same length as the hydrological year vector that indicates
+which are the time steps that are part of a valid hydrological year.
+Validity of a hydrological year is assessed according  to the following
+rules:
+\itemize{
+\item is the year complete (i.e. is there at least \code{n} (e.g. 365) days)?
+\item is there less than \code{na.th} (proportion) missing values in the
+hydrological year?
 }
 }

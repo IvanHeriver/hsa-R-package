@@ -10,27 +10,28 @@ fdc_values(Q, n = 1000, sort = FALSE, na.rm = TRUE)
 \item{Q}{numeric vector. Streamflow values.}
 
 \item{n}{number of rows in the resulting data.frame (should be smaller than
-the length of 'Q').}
+the length of \code{Q}).}
 
 \item{sort}{logical. Whether the fdc should be computed by sorting the
-streamflow values (TRUE) or by using the \code{quantile} function.}
+streamflow values (TRUE) or by using the \code{quantile} function (FALSE,
+default).}
 
 \item{na.rm}{logical. Should the missing values be ignored? (must be TRUE if
-the \code{quantile} function is used and 'Q' contains missing values)}
+the \code{quantile} function is used and \code{Q} contains missing values)}
 }
 \value{
 a data.frame with two columns:
 \itemize{
-\item 'p': probabilities of exceedance
-\item 'Q': corresponding streamflow values
+\item \code{p}: probabilities of exceedance
+\item \code{Q}: corresponding streamflow values
 }
 }
 \description{
-Given a vector of streamflow values 'Q', this function computes a data.frame
+Given a vector of streamflow values \code{Q}, this function computes a data.frame
 with two columns:
 \itemize{
-\item 'p': probabilities of exceedance
-\item 'Q': corresponding streamflow values
+\item \code{p}: probabilities of exceedance
+\item \code{Q}: corresponding streamflow values
 }
 }
 \seealso{

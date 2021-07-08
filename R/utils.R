@@ -1,4 +1,53 @@
 #------------------------------------------------------------------------------
+#' Helper to synchronize timeseries
+#' 
+#' Find the overlapping period for time series with equal fixed time steps. 
+#' Given two or more time vectors, the function returns a list containing
+#' logical vectors which indicate, for each input time series and each time 
+#' step whether it is included within the overlapping period.
+#' 
+#' If different classes types are found, the functions tries to convert the 
+#' vectors using as.Date(), so make sure to have matching classes before using
+#' this function to disable this behavior!
+#' 
+#' @param ... Time vectors (supporting the min/max methods)
+#' @return A list of logical vectors with each component being the same length as
+#' as the length of each input time vector. A TRUE value indicates that the
+#' corresponding time step was found to be within the time range of all the other
+#' time vectors.
+#' @export
+sync_timeseries <- function(...) {
+  args <- list(...)
+  n <- length(args)
+  if (n == 1) return(rep(TRUE, length(args[[1]]))) # this doesn't make sens
+  m <- vapply(args, length, numeric(1L))
+  
+  # deal with different time classes
+  ts_class <- lapply(args, class)
+  ts_first_class <- ts_class[[1]][1]
+  different_classes <- FALSE
+  for (k in 2:n) if (!identical(ts_class[[k]], ts_first_class)) different_classes <- TRUE
+  if (different_classes) {
+    warning("Vectors have different classes! They were all converted to 'Date' class")
+    # try and convert everything to Date class
+    args <- lapply(args, as.Date)
+  }
+  
+  # get min/max of overlapping periods
+  time_min <- max(vapply(args, min, numeric(1L)))
+  time_max <- min(vapply(args, max, numeric(1L)))
+  
+  # check if time series do overlap
+  if (time_max <=  time_min) warning("Vectors don't overlap!")
+  
+  # compute "overlap" logical vectors
+  out <- list()
+  for (k in 1:n) out[[k]] <- args[[k]] >= time_min & args[[k]] <= time_max
+  
+  return(out)
+}
+
+#------------------------------------------------------------------------------
 #' Compute the hydrological year days and the seasons.
 #' 
 #' Compute a data.frame containing the hydrological year, and optionnally the
@@ -62,14 +111,16 @@ get_hydro_years_seasons <- function(dates, month = 9, day_of_the_year = TRUE,
 #------------------------------------------------------------------------------
 #' Compute the valid hydrological year
 #' 
-#' Given a hydrological year vector and a matrix with the same number
+#' Given a hydrological year vector (a vector indicating the hydrological year
+#' each time step belongs to) and a matrix with the same number
 #' of rows (and any number of column), this function returns a logical
-#' vector of the same length as the hydrological year vector that
-#' indicates whether or not the time steps are part of a valid
-#' hydrological year. Validity of a hydrological year is assessed 
-#' according the two following rules:
-#' 1. is the year complete (i.e. is there at least \code{n} (365) days)?
-#' 2. is there less than \code{na.th} (proportion) missing values in the year?
+#' vector of the same length as the hydrological year vector that indicates
+#' which are the time steps that are part of a valid hydrological year.
+#' Validity of a hydrological year is assessed according  to the following
+#' rules:
+#' - is the year complete (i.e. is there at least \code{n} (e.g. 365) days)?
+#' - is there less than \code{na.th} (proportion) missing values in the 
+#' hydrological year?
 #' 
 #' @param hy numeric vector. a hydrological year vector (will be coerced to factor)
 #' @param x numeric matrix. a matrix (or a vector) with as many row (elements) 
