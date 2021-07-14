@@ -13,7 +13,7 @@
 #' @param n_smooth integer. How many times the rolling mean is to be applied
 #' on the streamflow timeseries before applying the recession events extraction
 #' @param window_smooth integer. The size, in days, of the window over which
-#' the rollogin mean is to be applied.
+#' the rolling mean is to be applied.
 #' @param return_smoothed logical. Whether the smoothed streamflow timeseries 
 #' should be returned as well.
 #' @return Returns a two columns data.frame with the 'start' and 'end' index
@@ -41,8 +41,8 @@ recession_events_index <- function(Q, minduration, maxduration, minvalue,
   # find end of recessions from minima and create event data.frame
   imax <- c(which(ismax), length(Q))
   imin <- which(ismin)
-  # here some magic is done in C++ to find the minima following 
-  # each local maxima (if any)
+  # here some magic is done in C++ for speed purposes
+  # to find the minima following  each local maxima (if any)
   ievents <- data.frame(Start = imax, End = rec_events(imax, imin))
   # remove events with no end
   ievents <- ievents[!is.na(ievents[, 2L]), ]
