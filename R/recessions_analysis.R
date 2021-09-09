@@ -27,7 +27,7 @@ recession_events_index <- function(Q, minduration, maxduration, minvalue,
   # optional smooting of Q
   if (n_smooth > 0) {
     for (k in 1:n_smooth) {
-      Q <- RccpRoll::roll_mean(x = Q, n = window_smooth, fill = NA, align = "center")
+      Q <- RcppRoll::roll_mean(x = Q, n = window_smooth, fill = NA, align = "center")
     }
   }
   # find local maxima and minima
